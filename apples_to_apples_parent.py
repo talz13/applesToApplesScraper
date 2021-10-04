@@ -1,5 +1,6 @@
 import requests
 import json
+import locale
 from decimal import Decimal
 from collections import namedtuple
 from json import JSONEncoder
@@ -32,11 +33,14 @@ class ApplesToApplesParent:
 
         records = []
         bestCurrentDeal = None
+        bestDealByLength = {}
+
+        locale.setlocale(locale.LC_ALL, '')
 
         for i in range(0, len(suppliers) - 1):
-            newUtilityRecord = UtilityRecord(suppliers[i], Decimal(rates[i]), rateTypes[i], introPrices[i], int(termLengths[i].strip(' mo.')), Decimal(earlyTermFees[i][1:]), Decimal(monthlyFees[i][1:]), (Decimal(contract.rate) - Decimal(rates[i])) * contract.yearlyUsage)
+            newUtilityRecord = UtilityRecord(suppliers[i], Decimal(rates[i]), rateTypes[i], introPrices[i], int(termLengths[i].strip(' mo.')), Decimal(earlyTermFees[i][1:]), Decimal(monthlyFees[i][1:]), locale.currency((Decimal(contract.rate) - Decimal(rates[i])) * contract.yearlyUsage))
             records.append(newUtilityRecord)
-            if newUtilityRecord.monthlyFee == 0 and newUtilityRecord.rateType == 'Fixed':
+            if newUtilityRecord.monthlyFee == 0 and newUtilityRecord.earlyTermFee < 25 and newUtilityRecord.rateType == 'Fixed' and newUtilityRecord.termLength >= 6:
                 if bestCurrentDeal == None or newUtilityRecord.rate < bestCurrentDeal.rate:
                     bestCurrentDeal = newUtilityRecord
 
@@ -46,7 +50,7 @@ class ApplesToApplesParent:
         goodDeals = []
 
         for record in records:
-            if record.rate <= contract.rate and record.monthlyFee == 0 and record.rateType == 'Fixed' and record.termLength >= 6 and record.earlyTermFee < 99 :
+            if record.rate <= contract.rate and record.monthlyFee == 0 and record.rateType == 'Fixed' and record.termLength >= 6 and record.earlyTermFee <= 25 :
                 goodDeals.append(record)
         print()
         if len(goodDeals) > 0:
