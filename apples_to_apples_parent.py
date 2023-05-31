@@ -1,6 +1,7 @@
 import requests
 import json
 import locale
+import sys
 from decimal import Decimal
 from collections import namedtuple
 from json import JSONEncoder
@@ -29,7 +30,11 @@ class ApplesToApplesParent:
 
         jsonFile = open(currentContractFile)
         cd = json.load(jsonFile)
-        contract = CurrentUtilityRecord(supplier=cd['supplier'], rate=cd['rate'], rateType=cd['rateType'], introPrice=cd['introPrice'], termLength=cd['termLength'], earlyTermFee=cd['earlyTermFee'], monthlyFee=cd['monthlyFee'], signupDate=cd['signupDate'], startDate=cd['startDate'], endDate=cd['endDate'], yearlyUsage=cd['yearlyUsage'])
+        activeCd = [x for x in cd if x['active'] == True]
+        if (len(activeCd) != 1):
+            print ('Multiple active records found! Please check your contract file %s' % (currentContractFile))
+            sys.exit()
+        contract = CurrentUtilityRecord(supplier=activeCd[0]['supplier'], rate=activeCd[0]['rate'], rateType=activeCd[0]['rateType'], introPrice=activeCd[0]['introPrice'], termLength=activeCd[0]['termLength'], earlyTermFee=activeCd[0]['earlyTermFee'], monthlyFee=activeCd[0]['monthlyFee'], signupDate=activeCd[0]['signupDate'], startDate=activeCd[0]['startDate'], endDate=activeCd[0]['endDate'], yearlyUsage=activeCd[0]['yearlyUsage'])
 
         records = []
         bestCurrentDeal = None

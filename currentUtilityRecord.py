@@ -6,6 +6,7 @@ class CurrentUtilityRecord(UtilityRecord):
     startDate = None
     endDate = None
     yearlyUsage = None
+    active = False
 
     def __init__(self, supplier, rate, rateType, introPrice, termLength, earlyTermFee, monthlyFee, signupDate, startDate, endDate, yearlyUsage, yearlySavings=None):
         self.signupDate = signupDate
@@ -16,10 +17,10 @@ class CurrentUtilityRecord(UtilityRecord):
         UtilityRecord.__init__(self, supplier, rate, rateType, introPrice, termLength, earlyTermFee, monthlyFee)
     
     def print(self):
-        print('%s - %s - %s - %s - %s - %s - %s - %s' % (self.supplier, self.rate, self.rateType, self.introPrice, self.termLength, self.earlyTermFee, self.monthlyFee, self.yearlySavings))
+        print('%s - %s - %s - %s - %s - %s - %s - %s' % (self.supplier, self.rate, self.rateType, self.introPrice, self.termLength, self.earlyTermFee, self.monthlyFee, self.startDate, self.endDate, self.yearlyUsage))
     
     def getTabulateFormatted(self):
-        return [self.supplier, self.rate, self.rateType, self.introPrice, self.termLength, self.earlyTermFee, self.monthlyFee, self.yearlySavings]
+        return [self.supplier, self.rate, self.rateType, self.introPrice, self.termLength, self.earlyTermFee, self.monthlyFee, self.startDate, self.endDate, self.yearlyUsage]
     
     def getTableHeaders(self):
-        return ['Supplier', 'Rate', 'Rate Type', 'Intro Price', 'Term Length', 'Early Term Fee', 'Monthly Fee', 'Yearly Savings']
+        return ['Supplier', 'Rate', 'Rate Type', 'Intro Price', 'Term Length', 'Early Term Fee', 'Monthly Fee', 'Start Date', 'End Date', 'Yearly Usage']
