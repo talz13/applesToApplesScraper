@@ -7,12 +7,14 @@ class CurrentUtilityRecord(UtilityRecord):
     endDate = None
     yearlyUsage = None
     active = False
+    territoryId = None
 
-    def __init__(self, supplier, rate, rateType, introPrice, termLength, earlyTermFee, monthlyFee, signupDate, startDate, endDate, yearlyUsage, yearlySavings=None):
+    def __init__(self, supplier, rate, rateType, introPrice, termLength, earlyTermFee, monthlyFee, signupDate, startDate, endDate, territoryId, yearlyUsage, yearlySavings=None):
         self.signupDate = signupDate
         self.startDate = startDate
         self.endDate = endDate
         self.yearlyUsage = yearlyUsage
+        self.territoryId = territoryId
 
         UtilityRecord.__init__(self, supplier, rate, rateType, introPrice, termLength, earlyTermFee, monthlyFee)
     
