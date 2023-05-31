@@ -16,7 +16,8 @@ Create a currentUtilityRecord JSON file to allow comparisons to be made (`curren
     "startDate" : "2021-01-01",
     "endDate" : "2022-01-01",
     "yearlyUsage" : 12345,
-    "territoryId" : 1
+    "territoryId" : 1,
+    "active" : true
 }
 ```
 
