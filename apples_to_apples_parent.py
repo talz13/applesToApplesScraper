@@ -81,3 +81,5 @@ class ApplesToApplesParent:
             print('Here\'s the best current deal found:')
             print(tabulate([bestCurrentDeal.getTabulateFormatted()], headers=bestCurrentDeal.getTableHeaders()))
 
+        print("\n=============================================\n")
+
